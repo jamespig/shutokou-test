@@ -34,3 +34,4 @@ jobs:
           folder: dist # 構建輸出目錄
           branch: gh-pages # 部署分支
           clean: true # 自動清理舊文件
+          token: ${{ secrets.GH_PAT }}
