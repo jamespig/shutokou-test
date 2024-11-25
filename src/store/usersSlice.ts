@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SingleUser, UserType } from "../types/userType";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
+const API_BASE_URL = `${CORS_PROXY}${import.meta.env.VITE_API_URL}`;
 
 // 有指定id
 export const fetchUser = createAsyncThunk<
