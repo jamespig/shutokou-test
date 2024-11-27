@@ -1,8 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SingleUser, UserType } from "../types/userType";
 
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const API_BASE_URL = `${CORS_PROXY}${import.meta.env.VITE_API_URL}`;
+
+// 因為我有部署到Github Page上，https無法取得http來源的內容，所以要透過這種方式處理
+const enableCORSProxy = async () => {
+  try {
+    const response = await fetch(CORS_PROXY, { method: "GET" });
+    if (response.ok) {
+      console.log("CORS Proxy 已啟用！");
+    } else {
+      console.error("CORS Proxy 啟用失敗：", response.statusText);
+    }
+  } catch (error) {
+    console.error("無法啟用 CORS Proxy:", error);
+  }
+};
 
 // 有指定id
 export const fetchUser = createAsyncThunk<
@@ -13,6 +27,7 @@ export const fetchUser = createAsyncThunk<
   "users/fetchUser", // Action 的名稱
   async (userId: number, thunkAPI) => {
     try {
+      enableCORSProxy() // 開始呼叫API前先去取得憑證
       const response = await fetch(`${API_BASE_URL}/users/${userId}`);
 
       if (!response.ok) {
@@ -50,6 +65,7 @@ export const fetchAllUsers = createAsyncThunk(
   "users/fetchAllUsers",
   async (_, thunkAPI) => {
     try {
+      enableCORSProxy() // 開始呼叫API前先去取得憑證
       // 同時發送多支 API 請求
       const responses = await Promise.all([
         fetch(`${API_BASE_URL}/users/1`),
