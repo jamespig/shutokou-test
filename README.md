@@ -12,3 +12,7 @@
 - 彈出視窗
 - 表格
 - 卡片
+## 專案相關連結
+- https://github.com/jamespig/shutokou-test.git
+- https://jamespig.github.io/shutokou-test/
+- https://cors-anywhere.herokuapp.com/
